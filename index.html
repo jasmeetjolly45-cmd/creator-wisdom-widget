@@ -1,236 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Creator Wisdom</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html,
-body{
-    width:100%;
-    height:100%;
-    background:#ffffff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-}
-
-.card{
-
-    width:360px;
-    min-height:190px;
-
-    background:#1F4332;
-
-    border-radius:24px;
-
-    padding:26px;
-
-    color:white;
-
-    box-shadow:
-        0 18px 40px rgba(0,0,0,.18);
-
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-
-}
-
-.top{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-}
-
-.title{
-
-    font-size:12px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    opacity:.85;
-    font-weight:600;
-
-}
-
-.refresh{
-
-    width:34px;
-    height:34px;
-
-    border:none;
-
-    background:rgba(255,255,255,.12);
-
-    color:white;
-
-    border-radius:50%;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-    font-size:17px;
-
-}
-
-.refresh:hover{
-
-    background:rgba(255,255,255,.22);
-    transform:rotate(180deg);
-
-}
-
-.quote{
-
-    margin-top:28px;
-
-    font-size:24px;
-
-    line-height:1.45;
-
-    font-weight:600;
-
-    text-align:center;
-
-    transition:.35s;
-
-}
-
-.fade{
-
-    opacity:0;
-    transform:translateY(8px);
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Wisdom Widget</title>
+    <style>
+        body {
+            background-color: transparent; /* Ensures no white background around the box */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .box {
+            /* Forest green gradient styling */
+            background: linear-gradient(135deg, #1e392a 0%, #0d1e14 100%);
+            width: 100%;
+            max-width: 340px;
+            padding: 24px 28px;
+            border-radius: 14px;
+            text-align: center;
+            color: #ffffff;
+            box-sizing: border-box;
+            box-shadow: 0 10px 25px rgba(13, 30, 20, 0.3);
+            border: 1px solid #2d523c;
+        }
+        .title {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #a3e635; /* Subtle accent green for the header */
+            margin-bottom: 12px;
+        }
+        .wisdom-text {
+            font-size: 16px;
+            line-height: 1.5;
+            font-weight: 500;
+            color: #ffffff;
+            white-space: pre-line; /* Preserves line breaks in lessons */
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="card">
+    <div class="box">
+        <div class="title">📖 Creator Wisdom</div>
+        <div class="wisdom-text" id="wisdom">Loading...</div>
+    </div>
 
-<div class="top">
+    <script>
+        // Add or edit your tiny lessons here!
+        const lessons = [
+            "Your first 100 posts\nteach you more than\nyour first 100 ideas.",
+            "Consistency beats intensity.\nShow up every day.",
+            "Document, don't create.\nShare your actual process.",
+            "If it feels easy to you,\nit might be insightful to others.",
+            "Focus on one platform\nuntil you hit traction.",
+            "Clear writing\nis the foundation of\nclear thinking."
+        ];
 
-<div class="title">
-📖 CREATOR WISDOM
-</div>
-
-<button class="refresh" onclick="newQuote()">
-↻
-</button>
-
-</div>
-
-<div class="quote" id="quote">
-
-Volume reveals your style; iteration builds your quality.
-
-</div>
-
-</div>
-
-<script>
-
-const quotes=[
-
-"Volume reveals your style; iteration builds your quality.",
-
-"Consistency beats intensity.",
-
-"Done is better than perfect.",
-
-"Create before you consume.",
-
-"Every post is practice.",
-
-"Clarity comes from publishing.",
-
-"Your next idea is hidden inside your next project.",
-
-"Perfection delays progress.",
-
-"Creators grow by creating.",
-
-"Ship it. Learn. Repeat.",
-
-"The algorithm rewards consistency, not hesitation.",
-
-"Quality improves through repetition.",
-
-"Start before you feel ready.",
-
-"One great idea can change everything.",
-
-"Momentum is built one post at a time.",
-
-"Your audience remembers consistency.",
-
-"Keep showing up.",
-
-"Publish. Reflect. Improve.",
-
-"Your creativity grows when you use it.",
-
-"The hardest post is the one you never publish.",
-
-"Small steps compound into remarkable results.",
-
-"Discipline creates freedom.",
-
-"Progress loves repetition.",
-
-"Every masterpiece started as a draft.",
-
-"Action creates confidence."
-
-];
-
-let lastIndex=0;
-
-function newQuote(){
-
-const quote=document.getElementById("quote");
-
-quote.classList.add("fade");
-
-setTimeout(()=>{
-
-let index;
-
-do{
-
-index=Math.floor(Math.random()*quotes.length);
-
-}
-
-while(index===lastIndex);
-
-lastIndex=index;
-
-quote.innerHTML=quotes[index];
-
-quote.classList.remove("fade");
-
-},250);
-
-}
-
-</script>
+        // Pick a random lesson on page refresh
+        const randomIndex = Math.floor(Math.random() * lessons.length);
+        document.getElementById('wisdom').innerText = lessons[randomIndex];
+    </script>
 
 </body>
 </html>
