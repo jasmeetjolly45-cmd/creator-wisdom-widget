@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creator Wisdom Widget</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #2f2f2f;
+      padding: 15px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 18px;
+      padding: 24px 28px;
+      max-width: 320px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+    }
+    .header {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.65;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .wisdom-text {
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1.45;
+      color: #1a1a1a;
+    }
+    
+    /* Dark Mode support for Notion */
+    @media (prefers-color-scheme: dark) {
+      body {
+        color: #e0e0e0;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+      .wisdom-text {
+        color: #f3f3f3;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="header">📖 Creator Wisdom</div>
+    <div class="wisdom-text" id="wisdom">Loading lesson...</div>
+  </div>
+
+  <script>
+    const lessons = [
+      "Your first 100 posts teach you more than your first 100 ideas.",
+      "Consistency builds trust long before high production value does.",
+      "Volume reveals your style; iteration builds your quality.",
+      "Clear positioning beats clever editing every single time.",
+      "Stop optimizing the hook until the core value is sharp.",
+      "Build a system for output, not just a list of ideas.",
+      "Creativity is a muscle trained by finishing things, not starting them.",
+      "Focus on serving 10 loyal viewers before chasing 10,000 random ones.",
+      "Your audience doesn't care about your workflow, only your value.",
+      "Small daily execution compounds faster than rare bursts of genius."
+    ];
+
+    function loadRandomLesson() {
+      const randomIndex = Math.floor(Math.random() * lessons.length);
+      document.getElementById('wisdom').innerText = lessons[randomIndex];
+    }
+
+    loadRandomLesson();
+  </script>
+
+</body>
+</html>
