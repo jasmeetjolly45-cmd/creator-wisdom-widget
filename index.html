@@ -5,42 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creator Wisdom Widget</title>
     <style>
-        body {
-            background-color: transparent; /* Ensures no white background around the box */
+        /* Force html and body to match dark/light theme transparently */
+        html, body {
+            background: transparent !important;
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
         }
+
+        /* If Notion forces iframe background, force it to blend in dark mode */
+        @media (prefers-color-scheme: dark) {
+            html, body {
+                background-color: #191919 !important; /* Notion dark mode background color */
+            }
+        }
+
         .box {
             /* Forest green gradient styling */
             background: linear-gradient(135deg, #1e392a 0%, #0d1e14 100%);
             width: 100%;
-            max-width: 340px;
-            padding: 24px 28px;
-            border-radius: 14px;
+            max-width: 320px;
+            padding: 24px 24px 18px 24px;
+            border-radius: 16px;
             text-align: center;
             color: #ffffff;
             box-sizing: border-box;
-            box-shadow: 0 10px 25px rgba(13, 30, 20, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
             border: 1px solid #2d523c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
         .title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
-            color: #a3e635; /* Subtle accent green for the header */
-            margin-bottom: 12px;
+            color: #a3e635; /* Accent green */
+            margin-bottom: 14px;
         }
+
         .wisdom-text {
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.5;
             font-weight: 500;
             color: #ffffff;
-            white-space: pre-line; /* Preserves line breaks in lessons */
+            white-space: pre-line;
+            min-height: 60px; /* Prevents box jumping on short lessons */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Subtle Refresh Button */
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #a3e635;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: scale(1.05);
+        }
+
+        .refresh-btn:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
@@ -49,10 +95,12 @@
     <div class="box">
         <div class="title">📖 Creator Wisdom</div>
         <div class="wisdom-text" id="wisdom">Loading...</div>
+        <button class="refresh-btn" onclick="getNewLesson()">
+            🔄 New Lesson
+        </button>
     </div>
 
     <script>
-        // Add or edit your tiny lessons here!
         const lessons = [
             "Your first 100 posts\nteach you more than\nyour first 100 ideas.",
             "Consistency beats intensity.\nShow up every day.",
@@ -62,9 +110,21 @@
             "Clear writing\nis the foundation of\nclear thinking."
         ];
 
-        // Pick a random lesson on page refresh
-        const randomIndex = Math.floor(Math.random() * lessons.length);
-        document.getElementById('wisdom').innerText = lessons[randomIndex];
+        let currentIndex = -1;
+
+        function getNewLesson() {
+            let randomIndex;
+            // Ensure we don't repeat the exact same lesson twice in a row when clicking refresh
+            do {
+                randomIndex = Math.floor(Math.random() * lessons.length);
+            } while (randomIndex === currentIndex && lessons.length > 1);
+
+            currentIndex = randomIndex;
+            document.getElementById('wisdom').innerText = lessons[currentIndex];
+        }
+
+        // Run once on initial load
+        getNewLesson();
     </script>
 
 </body>
